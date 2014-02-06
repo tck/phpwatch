@@ -54,7 +54,8 @@
     <div class="info">
         <div class="right">
             <a href="?page=monitor&id=<?php p($monitor->getId()); ?>">Edit</a> -
-            <a href="?page=monitor-delete&id=<?php p($monitor->getId()); ?>">Delete</a> - 
+            <a href="?page=monitor-delete&id=<?php p($monitor->getId()); ?>">Delete</a> -
+            <a href="?page=monitor-stat&id=<?php p($monitor->getId()); ?>">Statistics</a> -
             <a href="?page=monitors&query=<?php p($monitor->getId()); ?>">Re-query</a>
             <?php
                 if(!GuiHelpers::isExpanded($monitor->getId())) :

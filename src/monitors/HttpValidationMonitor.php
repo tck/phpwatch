@@ -62,6 +62,24 @@
 
         public function queryMonitor()
         {
+            /*
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, 'http' . ($this->port == 443 ? 's' : '') . '://' . $this->hostname . '/' . $this->config['path']);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_TIMEOUT, intval($this->config['timeout'])); 
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); 
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); 
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); 
+            
+            $resp = curl_exec($ch);
+            
+            if (curl_errno($ch)) {
+                print "Error: " . curl_error($ch);
+            }
+            
+            curl_close($ch);
+            */
+            
             $hostname = $this->hostname;
             
             // Handle https-Requests (Port 443)
@@ -74,11 +92,13 @@
             }
             
             $sock = @fsockopen($hostname, $this->port, $errno, $errstr, intval($this->config['timeout']));
+            
             if(!$sock)
                 return false;
             $req  = "GET /" . $this->config['path'] . " HTTP/1.1\r\n";
             $req .= "Host: " . $this->hostname . "\r\n";
             $req .= "Connection: Close\r\n\r\n";
+            
             fwrite($sock, $req);
 
             $resp = '';
@@ -86,7 +106,7 @@
             {
                 $resp .= fread($sock, 1024);
             }
-
+            
             $valid = $this->isValid($resp);
             fclose($sock);
             if($this->getMode() == HttpValidationMonitor::$MODE_DOES_CONTAIN)

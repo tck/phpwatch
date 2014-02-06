@@ -71,3 +71,11 @@ div.error { display: inline; color: #ee0022; }
 form { margin: 0px; padding: 0px; }
 ul.options { margin: 2px; padding: 0 0; }
 ul.options li { list-style-type: none; margin: 0 0; }
+
+
+div.chart {
+    margin: 10px;
+}
+div.chart h2 {
+    margin-top: 20px;
+}

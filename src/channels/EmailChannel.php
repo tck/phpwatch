@@ -21,7 +21,16 @@
 
         private function getMessage($monitor)
         {
-            return sprintf($this->config['message'], $monitor->getHostname(), $monitor->getPort(), $monitor->getAlias());
+            $header = '';
+            if (isset($GLOBALS['PW2_CONFIG']['email']['message_header']) && $GLOBALS['PW2_CONFIG']['email']['message_header']) {
+                $header .= $GLOBALS['PW2_CONFIG']['email']['message_header'] . "\r\n";
+            }
+            $footer = '';
+            if (isset($GLOBALS['PW2_CONFIG']['email']['message_footer']) && $GLOBALS['PW2_CONFIG']['email']['message_footer']) {
+                $footer .= "\r\n" . $GLOBALS['PW2_CONFIG']['email']['message_footer'];
+            }
+            
+            return $header . sprintf($this->config['message'], $monitor->getHostname(), $monitor->getPort(), $monitor->getAlias()) . $footer;
         }
 
         public function getAddress()
@@ -31,7 +40,13 @@
 
         public function doNotify($monitor)
         {
-            mail($this->config['address'], $this->getSubject($monitor), $this->getMessage($monitor));
+            $headers = '';
+            if (isset($GLOBALS['PW2_CONFIG']['email']['from']) && $GLOBALS['PW2_CONFIG']['email']['from']) {
+                $headers .= 'From: ' . $GLOBALS['PW2_CONFIG']['email']['from'] . "\r\n";
+            }
+            $headers .= 'X-Mailer: phpWatch' . "\r\n";
+        
+            mail($this->config['address'], $this->getSubject($monitor), $this->getMessage($monitor), $headers);
         }
 
         public function getName()
