@@ -24,3 +24,4 @@ if (file_exists($PW2_CONFIG['path'] . '/config.local.php')) {
 
 define('PW2_VERSION', '2.1.0 Beta');
 define('PW2_PATH', $PW2_CONFIG['path']);
+define('PW2_DATEFORMAT', 'D, M j, Y G:i:s T');
