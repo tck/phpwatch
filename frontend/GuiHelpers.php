@@ -83,7 +83,7 @@ class GuiHelpers
     {
         if($timestamp == 0)
             return 'N/A';
-        return date('D, M j, Y G:i:s T', $timestamp);
+        return date(PW2_DATEFORMAT, $timestamp);
     }
 
     public static function getAllChannels($id = null)
